@@ -1,0 +1,30 @@
+{
+  "name": "ts-async-kit",
+  "version": "0.1.0",
+  "description": "A TS kit to deal with async operations, loops, retries.. and so on!",
+  "private": false,
+  "repository": "https://github.com/NicolasLopes7/ts-async-kit",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "ci": "pnpm build && pnpm test",
+    "test": "vitest"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "keywords": [
+    "typescript",
+    "async",
+    "promise",
+    "async-loop",
+    "async-retry"
+  ],
+  "author": "Nicolas Lopes",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5",
+    "vitest": "^0.28.5"
+  }
+}
