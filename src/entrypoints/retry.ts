@@ -7,7 +7,9 @@ type RetryParameters = {
   onRetry?: (err: Error) => void;
   onFail?: (err: Error) => void;
   currentRetry?: number;
+  backoffFactor?: number;
 };
+
 type RetryReturnType<T extends AnyFunction> = Promise<ReturnType<T>>;
 
 const sleep = async (time: number) =>
@@ -19,7 +21,7 @@ export async function retry<T extends AnyFunction>(
   fn: T,
   parameters?: RetryParameters
 ): RetryReturnType<T> {
-  const { maxRetries = 2, onFail, interval = 1000, onRetry } = parameters ?? {};
+  const { maxRetries = 2, onFail, interval = 1000, onRetry, backoffFactor = 1 } = parameters ?? {};
   const currentRetry = parameters?.currentRetry ?? 0;
   const shouldRecall = currentRetry < maxRetries;
 
@@ -35,13 +37,15 @@ export async function retry<T extends AnyFunction>(
       throw error;
     }
     onRetry?.(error);
-    await sleep(interval);
+    const delay = interval * (backoffFactor ** currentRetry);
+    await sleep(delay);
     return retry(fn, {
       maxRetries,
       interval,
       onRetry,
       onFail,
       currentRetry: currentRetry + 1,
+      backoffFactor,
     });
   }
 }
