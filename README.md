@@ -1,4 +1,3 @@
-![TS Async Kit cover](https://user-images.githubusercontent.com/57234795/220528687-2481dcda-197a-4db6-895c-f96ce81c36df.png)
 
 # 🚀 ts-async-kit
 A lightweight TypeScript library that provides an easy-to-use API for dealing with common promise-related operations such as retrying and looping.
