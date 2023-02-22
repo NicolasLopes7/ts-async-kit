@@ -96,4 +96,20 @@ describe('Retry', () => {
       expect(onFail).toHaveBeenCalledWith(new Error('Timeout limit reached'));
     });
   });
+
+  it('should execute function sucessfuly when the execution time is less than the timeout', async () => {
+    const fn = vi
+      .fn()
+      .mockImplementationOnce(() => {
+        throw Error('First execution');
+      })
+      .mockImplementationOnce(
+        async () => new Promise((resolve) => setTimeout(() => resolve({ success: true }), 5))
+      );
+
+    const { result } = await retryTest(fn, { maxRetries: 2, timeout: 10 });
+
+    expect(fn).toHaveBeenCalledTimes(2);
+    expect(result).toStrictEqual({ success: true });
+  })
 });
