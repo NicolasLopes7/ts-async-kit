@@ -35,7 +35,18 @@ In the above example, fetchData is called up to three times, and the result is l
 | onRetry (Optional) | Callback function that can be called with the error when a function is retried |
 | onFail (Optional) | Callback function that can be called with the error when the function execution finishes by `MaxRetries` OR `Timeout` |
 
-  
+### Sleep
+Sometimes, you just want to block the current flow of execution and wait a certain time. For you don't waste time searching
+on StackOverfow, we shipped a function that easily does that. It's called `sleep`.
+
+Here's an example:
+
+```ts
+import { sleep } from 'ts-async-kit'
+
+await sleep(1000) // Time in ms to sleep
+```
+
 ### Loop (WIP)
 Sometimes, you may need to perform a task repeatedly, such as polling an API for updates. With `ts-async-kit`, you can control how your loop will work. Error-tolerant, concurrent operations, until a condition is met, maximum number of iterations and so on...
 
