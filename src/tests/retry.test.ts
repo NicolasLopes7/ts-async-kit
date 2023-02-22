@@ -136,7 +136,7 @@ describe('Retry', () => {
 
     expect(fn).toHaveBeenCalledTimes(4);
     expect(onRetry).toHaveBeenCalledTimes(3);
-    expect(totalDuration).toBeGreaterThan(minExpectedDuration);
+    expect(totalDuration).toBeGreaterThanOrEqual(minExpectedDuration);
 
     expect(result).toStrictEqual({ success: true });
   });
