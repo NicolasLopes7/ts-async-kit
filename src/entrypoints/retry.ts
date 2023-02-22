@@ -3,6 +3,7 @@ import { AnyFunction } from "../common";
 type RetryParameters = {
   maxRetries?: number;
   interval?: number;
+  timeout?: number;
   onRetry?: (err: Error) => void;
   onFail?: (err: Error) => void;
   currentRetry?: number;
@@ -11,6 +12,8 @@ type RetryReturnType<T extends AnyFunction> = Promise<ReturnType<T>>;
 
 const sleep = async (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time));
+  
+const rejectsIn = (time: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout limit reached'), time));
 
 export async function retry<T extends AnyFunction>(
   fn: T,
@@ -22,9 +25,12 @@ export async function retry<T extends AnyFunction>(
 
   try {
     if (!shouldRecall) throw Error("Too many tries");
-    return fn();
+    return Promise.race<RetryReturnType<T>>([
+      fn(),
+      ...(parameters?.timeout ? [rejectsIn(parameters?.timeout)] : [])
+    ])
   } catch (error: any) {
-    if (error.message === "Too many tries") {
+    if (["Too many tries", "Timeout limit reached"].includes(error.message)) {
       onFail?.(error);
       throw error;
     }
