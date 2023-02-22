@@ -114,12 +114,10 @@ describe('Retry', () => {
   })
 
   it('should back off between retries based on backoffFactor', async () => {
-    const startTime = new Date().getTime();
-
     const fn = vi
       .fn()
       .mockImplementationOnce(() => {
-        throw Error('First execution'); 
+        throw Error('First execution');
       })
       .mockImplementationOnce(() => {
         throw Error('Second execution (10ms delay)');
@@ -128,9 +126,10 @@ describe('Retry', () => {
         throw Error('Third execution (30ms delay)');
       })
       .mockImplementationOnce(() => ({ success: true })); // 90ms delay
-  
+
+    const startTime = new Date().getTime();
     const { result, onRetry } = await retryTest(fn, { maxRetries: 4, backoffFactor: 3, interval: 10 });
-      
+
     const endTime = new Date().getTime();
     const minExpectedDuration = 10 + 30 + 90;
     const totalDuration = endTime - startTime;
@@ -138,7 +137,7 @@ describe('Retry', () => {
     expect(fn).toHaveBeenCalledTimes(4);
     expect(onRetry).toHaveBeenCalledTimes(3);
     expect(totalDuration).toBeGreaterThan(minExpectedDuration);
-  
+
     expect(result).toStrictEqual({ success: true });
   });
 });
