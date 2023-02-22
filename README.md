@@ -27,7 +27,15 @@ const result = await retry(fetchData, { maxRetries: 3 })
 ```
 
 In the above example, fetchData is called up to three times, and the result is logged to the console if successful. If all attempts fail, an error is thrown.
+| Parameter | Description |
+| ------- | ------- |
+| MaxRetries (Optional) | How many times the function will be executed |
+| Interval (Optional) | How long the function should wait to retry it again |
+| Timeout (Optional) | How long the function should wait until stops the function execution (and fail) |
+| onRetry (Optional) | Callback function that can be called with the error when a function is retried |
+| onFail (Optional) | Callback function that can be called with the error when the function execution finishes by `MaxRetries` OR `Timeout` |
 
+  
 ### Loop (WIP)
 Sometimes, you may need to perform a task repeatedly, such as polling an API for updates. With `ts-async-kit`, you can control how your loop will work. Error-tolerant, concurrent operations, until a condition is met, maximum number of iterations and so on...
 
