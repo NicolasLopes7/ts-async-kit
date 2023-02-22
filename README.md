@@ -32,12 +32,13 @@ In the above example, fetchData is called up to three times, and the result is l
 | MaxRetries (Optional) | How many times the function will be executed |
 | Interval (Optional) | How long the function should wait to retry it again |
 | Timeout (Optional) | How long the function should wait until stops the function execution (and fail) |
+| backoffFactor (Optional) | How much the interval should increase after each retry |
 | onRetry (Optional) | Callback function that can be called with the error when a function is retried |
 | onFail (Optional) | Callback function that can be called with the error when the function execution finishes by `MaxRetries` OR `Timeout` |
 
 ### Sleep 😴 
 Sometimes, you just want to block the current flow of execution and wait a certain time. For you don't waste time searching
-on StackOverfow, we shipped a function that easily does that. It's called `sleep`.
+on StackOverflow, we shipped a function that easily does that. It's called `sleep`.
 
 Here's an example:
 
