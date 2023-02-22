@@ -1,6 +1,6 @@
 {
   "name": "ts-async-kit",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A TS kit to deal with async operations, loops, retries.. and so on!",
   "private": false,
   "repository": "https://github.com/NicolasLopes7/ts-async-kit",
