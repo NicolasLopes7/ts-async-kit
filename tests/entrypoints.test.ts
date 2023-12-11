@@ -10,13 +10,12 @@ describe("library entrypoints", () => {
   });
 
   it("should export sleep entrypoint", async () => {
-    // @ts-expect-error
     const { sleep } = await getLib();
 
     const start = Date.now();
     await sleep(1000);
     const end = Date.now();
-    expect(end - start).toBeGreaterThan(1000);
+    expect(end - start).toBeGreaterThanOrEqual(1000);
   });
 });
 
