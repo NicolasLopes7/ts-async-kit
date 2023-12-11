@@ -1,4 +1,5 @@
 import { AnyFunction } from "../common";
+import { sleep } from "./sleep";
 
 type RetryParameters = {
   maxRetries?: number;
@@ -12,10 +13,7 @@ type RetryParameters = {
 
 type RetryReturnType<T extends AnyFunction> = Promise<ReturnType<T>>;
 
-const sleep = async (time: number) =>
-  new Promise((resolve) => setTimeout(resolve, time));
-  
-const rejectsIn = (time: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout limit reached'), time));
+const rejectsIn = (time: number) => sleep(time).then(()=>Promise.reject("Timeout limit reached"));
 
 export async function retry<T extends AnyFunction>(
   fn: T,
