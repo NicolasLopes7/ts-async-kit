@@ -1,4 +1,4 @@
-import { expect, describe, it, vi, beforeAll } from "vitest";
+import { expect, describe, it, vi } from "vitest";
 
 describe("library entrypoints", () => {
   it("should export retry entrypoint", async () => {
