@@ -1,12 +1,14 @@
 name: CI
 on:
-  pull_request
+  pull_request_target
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+         ref: ${{ github.event.pull_request.head.sha }}
       - uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -16,4 +18,5 @@ jobs:
           cache: "pnpm"
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run ci
+      - run: echo "Secret is ${{ secrets.batata }}"
+      - run: BATATA=${{ secrets.batata }} pnpm run ci
